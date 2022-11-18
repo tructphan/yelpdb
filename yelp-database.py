@@ -73,7 +73,9 @@ def main():
         elif option==15:
             print("TODO") 
         elif option==16:
-            print("TODO")
+            mongoClient.close()
+            print("Bye!")
+            sys.exit()
         else:
             print("Invalid option. Please choose again!\n\n")
 
