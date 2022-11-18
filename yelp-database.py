@@ -32,7 +32,9 @@ def main():
     except:
         print("Error: Could not connect to MongoDB")
 	
-    db = mongoClient["yelp"]
+    # db = mongoClient["yelp"]
+    db = mongoClient["restaurantdb"]
+    collection = db["restaursntcollection"]
     business_collection = db["business"]
     review_collection = db["review"]
     
@@ -41,47 +43,45 @@ def main():
         print_options(user_options)
         option = int(input('Please enter your choice: '))
         
-        match option:
-            case 1:
-                find_all_restaurants(business_collection)
-            case 2:
-                find_all_reviews(business_collection, review_collection)
-            case 3:
-                find_5_or_more_useful(business_collection, review_collection)
-            case 4:
-                find_5_or_more_funny(business_collection, review_collection)
-            case 5:
-                find_5_or_more_cool(business_collection, review_collection)
-            case 6: 
-                add_review(business_collection, review_collection)
-            case 7:
-                update_review(business_collection, review_collection)
-            case 8:
-                delete_review(business_collection, review_collection)
-            case 9:
-                print("TODO")
-            case 10:
-                print("TODO")
-            case 11:
-                print("TODO")
-            case 12: 
-                print("TODO")
-            case 13:
-                print("TODO")
-            case 14:
-                print("TODO")
-            case 15: 
-                print("TODO")
-            case 16:
-                mongoClient.close()
-                print("Bye!")
-                sys.exit()
-            case _:
-                print("Invalid option. Please choose again!\n\n")
+        if option==1:
+            #find_all_restaurants(business_collection)
+            find_all_restaurants(collection)
+        elif option==2:
+            find_all_reviews(business_collection, review_collection)
+        elif option==3:
+            find_5_or_more_useful(business_collection, review_collection)
+        elif option==4:
+            find_5_or_more_funny(business_collection, review_collection)
+        elif option==5:
+            find_5_or_more_cool(business_collection, review_collection)
+        elif option==6:
+            add_review(business_collection, review_collection)
+        elif option==7:
+            update_review(business_collection, review_collection)
+        elif option==8:
+            delete_review(business_collection, review_collection)
+        elif option==9:
+            print("TODO")
+        elif option==10:
+            print("TODO")
+        elif option==11:
+            print("TODO")
+        elif option==12:
+            print("TODO")
+        elif option==14:
+            print("TODO")
+        elif option==15:
+            print("TODO") 
+        elif option==16:
+            print("TODO")
+        else:
+            print("Invalid option. Please choose again!\n\n")
 
 # user options implementation
 def find_all_restaurants(business_collection):
-    print("TODO")
+    output = business_collection.find().limit(10)
+    for doc in output:
+        print(doc)
     
 def find_all_reviews(business_collection, review_collection):
     print("TODO")
