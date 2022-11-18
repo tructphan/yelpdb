@@ -34,7 +34,7 @@ def main():
 	
     # db = mongoClient["yelp"]
     db = mongoClient["restaurantdb"]
-    collection = db["restaursntcollection"]
+    collection = db["restaurantcollection"]
     business_collection = db["business"]
     review_collection = db["review"]
     
