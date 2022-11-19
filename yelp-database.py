@@ -1,6 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 import sys
+import datetime
 
 user_options = {1: 'Find business by name', 
                2: 'Find reviews by restaurant name', 
@@ -15,8 +16,8 @@ user_options = {1: 'Find business by name',
                11: 'Find businesses that allow dogs',
                12: 'Find reviews that mention a specific word',
                13: 'Add a review',
-               14: 'Update a review',
-               15: 'Delete a review',
+               14: 'Update business name',
+               15: 'Delete a business',
                16: 'Exit'}
 
 
@@ -27,7 +28,7 @@ def print_options(user_options):
 def main():
     mongoClient = None
     try:
-        mongoClient = MongoClient("localhost:27017")
+        mongoClient = MongoClient("ec2-54-164-108-204.compute-1.amazonaws.com:27017")
         print("MongoDB connected successfully!")
     except:
         print("Error: Could not connect to MongoDB")
@@ -68,9 +69,9 @@ def main():
         elif option==13:
             add_review(business_collection, review_collection)
         elif option==14:
-            update_review(business_collection, review_collection)
+            update_business(business_collection, review_collection)
         elif option==15:
-            delete_review(business_collection, review_collection)
+            delete_business(business_collection, review_collection)
         elif option==16:
             mongoClient.close()
             print("Bye!")
@@ -136,11 +137,19 @@ def add_review(business_collection, review_collection):
         star = input("Please enter number of stars you would give this business: ")
     review = input("Please enter review: ")
     
-def update_review(business_collection, review_collection):
-    name = input("Please enter business name: ")
+    business = business_collection.find_one({"name": {"$regex": name}})
+    new_review = {"business_id": business["business_id"], "stars": star, "text": review, "date": datetime.datetime.now()}
+    review_collection.insert_one(new_review)
     
-def delete_review(business_collection, review_collection):
-    name = input("Please enter business name: ")
+def update_business(business_collection):
+    business_id = input("Please enter business id: ")
+    new_name = input("Please enter new business name: ")
+    business_collection.update_one({"business_id": business_id}, {"$set": {"name": new_name}})
+    
+def delete_business(business_collection):
+    business_id = input("Please enter business id: ")
+    business_collection.delete_one({"business_id": business_id})
+    
 
 if __name__ == "__main__":
     main()
