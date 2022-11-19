@@ -103,13 +103,21 @@ def find_3_or_more_stars(business_collection, review_collection):
     name = input("Please enter restaurant name: ")
     
 def find_ca_businesses(business_collection):
-    print("TODO")
+    output = business_collection.find({"state": "CA"},
+                             {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1,
+                              "stars": 1, "review_count": 1}).limit(10)
+    for doc in output:
+        print(doc)
     
 def find_500_or_more_reviews(business_collection):
     print("TODO")
     
 def find_open_businesses(business_collection):
-    print("TODO")
+    output = business_collection.find({"open": 1},
+                             {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1,
+                              "stars": 1, "review_count": 1}).limit(10)
+    for doc in output:
+        print(doc)
     
 def add_review(business_collection, review_collection):
     print("TODO")
