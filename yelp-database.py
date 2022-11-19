@@ -69,9 +69,9 @@ def main():
         elif option==13:
             add_review(business_collection, review_collection)
         elif option==14:
-            update_business(business_collection, review_collection)
+            update_business(business_collection)
         elif option==15:
-            delete_business(business_collection, review_collection)
+            delete_business(business_collection)
         elif option==16:
             mongoClient.close()
             print("Bye!")
