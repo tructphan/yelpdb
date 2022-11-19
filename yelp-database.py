@@ -138,7 +138,7 @@ def add_review(business_collection, review_collection):
     review = input("Please enter review: ")
     
     business = business_collection.find_one({"name": {"$regex": name}})
-    new_review = {"business_id": business["business_id"], "stars": star, "text": review, "date": datetime.datetime.now()}
+    new_review = {"business_id": business.business_id, "stars": star, "text": review, "date": datetime.datetime.now()}
     review_collection.insert_one(new_review)
     
 def update_business(business_collection):
