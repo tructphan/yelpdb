@@ -113,7 +113,7 @@ def find_500_or_more_reviews(business_collection):
     print("TODO")
     
 def find_open_businesses(business_collection):
-    output = business_collection.find({"open": 1},
+    output = business_collection.find({"is_open": 1},
                              {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1,
                               "stars": 1, "review_count": 1}).limit(10)
     for doc in output:
