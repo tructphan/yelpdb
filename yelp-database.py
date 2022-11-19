@@ -2,18 +2,18 @@ import pymongo
 from pymongo import MongoClient
 import sys
 
-user_options = {1: 'Find restaurant by name', 
-               2: 'Find all reviews by restaurant name', 
-               3: 'Find all reviews having 5 or more useful votes',
-               4: 'Find all reviews having 5 or more funny votes', 
-               5: 'Find all reviews having 5 or more cool votes', 
-               6: 'Find all reviews having 3 stars or higher',
-               7: 'Find all businesses in California',
-               8: 'Find all businesses with more than 500 reviews',
-               9: 'Find all businesses that still open',
-               10: '',
-               11: '',
-               12: '',
+user_options = {1: 'Find business by name', 
+               2: 'Find reviews by restaurant name', 
+               3: 'Find reviews having 5 or more useful votes',
+               4: 'Find reviews having 5 or more funny votes', 
+               5: 'Find reviews having 5 or more cool votes', 
+               6: 'Find reviews having 3 stars or higher',
+               7: 'Find businesses in California',
+               8: 'Find businesses with more than 500 reviews',
+               9: 'Find businesses that still open',
+               10: 'Find businesses by categories',
+               11: 'Find businesses that allow dogs',
+               12: 'Find reviews that mention a specific word',
                13: 'Add a review',
                14: 'Update a review',
                15: 'Delete a review',
@@ -42,7 +42,7 @@ def main():
         option = int(input('Please enter your choice: '))
         
         if option==1:
-            find_restaurant(business_collection)
+            find_business(business_collection)
         elif option==2:
             find_all_reviews(business_collection, review_collection)
         elif option==3:
@@ -79,8 +79,8 @@ def main():
             print("Invalid option. Please choose again!\n\n")
 
 # user options implementation
-def find_restaurant(business_collection):
-    name = input("Please enter restaurant name: ")
+def find_business(business_collection):
+    name = input("Please enter business name: ")
     output = business_collection.find({"name": {"$regex": name}},
                              {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1,
                               "stars": 1, "review_count": 1}).limit(5)
@@ -88,19 +88,19 @@ def find_restaurant(business_collection):
         print(doc)
     
 def find_all_reviews(business_collection, review_collection):
-    name = input("Please enter restaurant name: ")
+    name = input("Please enter business name: ")
     
 def find_5_or_more_useful(business_collection, review_collection):
-    name = input("Please enter restaurant name: ")
+    name = input("Please enter business name: ")
     
 def find_5_or_more_funny(business_collection, review_collection):
-    name = input("Please enter restaurant name: ")
+    name = input("Please enter business name: ")
     
 def find_5_or_more_cool(business_collection, review_collection):
-    name = input("Please enter restaurant name: ")
+    name = input("Please enter business name: ")
     
 def find_3_or_more_stars(business_collection, review_collection):
-    name = input("Please enter restaurant name: ")
+    name = input("Please enter business name: ")
     
 def find_ca_businesses(business_collection):
     output = business_collection.find({"state": "CA"},
@@ -119,14 +119,28 @@ def find_open_businesses(business_collection):
     for doc in output:
         print(doc)
     
-def add_review(business_collection, review_collection):
+def find_by_categories(business_collection):
     print("TODO")
+    
+def find_businesses_allow_dogs(business_collection):
+    print("TODO")
+    
+def find_reviews_by_keyword(business_collection, review_collection):
+    print("TODO")
+
+def add_review(business_collection, review_collection):
+    name = input("Please enter business name: ")
+    star = input("Please enter number of stars you would give this business: ")
+    while (isinstance(star, int) != True):
+        print("Must be a number!\n")
+        star = input("Please enter number of stars you would give this business: ")
+    review = input("Please enter review: ")
     
 def update_review(business_collection, review_collection):
-    print("TODO")
+    name = input("Please enter business name: ")
     
 def delete_review(business_collection, review_collection):
-    print("TODO")
+    name = input("Please enter business name: ")
 
 if __name__ == "__main__":
     main()
