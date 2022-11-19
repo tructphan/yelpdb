@@ -132,9 +132,6 @@ def find_reviews_by_keyword(business_collection, review_collection):
 def add_review(business_collection, review_collection):
     name = input("Please enter business name: ")
     star = input("Please enter number of stars you would give this business: ")
-    while (isinstance(star, int) != True):
-        print("Must be a number!\n")
-        star = input("Please enter number of stars you would give this business: ")
     review = input("Please enter review: ")
     
     business = business_collection.find_one({"name": {"$regex": name}})
