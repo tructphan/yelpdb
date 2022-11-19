@@ -28,7 +28,7 @@ def print_options(user_options):
 def main():
     mongoClient = None
     try:
-        mongoClient = MongoClient("ec2-54-164-108-204.compute-1.amazonaws.com:27017")
+        mongoClient = MongoClient("localhost:27017")
         print("MongoDB connected successfully!")
     except:
         print("Error: Could not connect to MongoDB")
