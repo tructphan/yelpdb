@@ -135,18 +135,20 @@ def add_review(business_collection, review_collection):
     review = input("Please enter review: ")
     
     business = business_collection.find_one({"name": {"$regex": name}})
-    print(business)
     new_review = {"business_id": business["business_id"], "stars": star, "text": review, "date": datetime.datetime.now()}
     review_collection.insert_one(new_review)
+    print(new_review)
     
 def update_business(business_collection):
     business_id = input("Please enter business id: ")
     new_name = input("Please enter new business name: ")
     business_collection.update_one({"business_id": business_id}, {"$set": {"name": new_name}})
+    print(business_collection.find({business_id: business_id}))
     
 def delete_business(business_collection):
     business_id = input("Please enter business id: ")
     business_collection.delete_one({"business_id": business_id})
+    print(business_collection.find({business_id: business_id}))
     
 
 if __name__ == "__main__":
