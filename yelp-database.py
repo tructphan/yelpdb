@@ -22,6 +22,7 @@ user_options = {1: 'Find business by name',
 
 
 def print_options(user_options):
+    print("\n\n")
     for key, value in user_options.items():
         print(key, ": ", value)
 
@@ -61,11 +62,11 @@ def main():
         elif option==9:
             find_open_businesses(business_collection)
         elif option==10:
-            print("TODO")
+            find_by_categories(business_collection)
         elif option==11:
-            print("TODO")
+            find_businesses_allow_dogs(business_collection)
         elif option==12:
-            print("TODO")
+            find_reviews_by_keyword(business_collection, review_collection)
         elif option==13:
             add_review(business_collection, review_collection)
         elif option==14:
@@ -137,18 +138,15 @@ def add_review(business_collection, review_collection):
     business = business_collection.find_one({"name": {"$regex": name}})
     new_review = {"business_id": business["business_id"], "stars": star, "text": review, "date": datetime.datetime.now()}
     review_collection.insert_one(new_review)
-    print(new_review)
     
 def update_business(business_collection):
     business_id = input("Please enter business id: ")
     new_name = input("Please enter new business name: ")
     business_collection.update_one({"business_id": business_id}, {"$set": {"name": new_name}})
-    print(business_collection.find({business_id: business_id}))
     
 def delete_business(business_collection):
     business_id = input("Please enter business id: ")
     business_collection.delete_one({"business_id": business_id})
-    print(business_collection.find({business_id: business_id}))
     
 
 if __name__ == "__main__":
