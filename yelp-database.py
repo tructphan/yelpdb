@@ -44,7 +44,7 @@ def main():
         option = int(input('Please enter your choice: '))
         
         if option==1:
-            find_business(business_collection)
+            find_business(business_collection) 
         elif option==2:
             find_all_reviews(business_collection, review_collection)
         elif option==3:
@@ -59,7 +59,7 @@ def main():
             find_ca_businesses(business_collection)
         elif option==8:
             find_500_or_more_reviews(business_collection, review_collection)
-        elif option==9:
+        elif option==9: 
             find_open_businesses(business_collection)
         elif option==10:
             find_by_categories(business_collection)
@@ -67,11 +67,11 @@ def main():
             find_businesses_allow_dogs(business_collection)
         elif option==12:
             find_reviews_by_keyword(business_collection, review_collection)
-        elif option==13:
+        elif option==13: 
             add_review(business_collection, review_collection)
-        elif option==14:
+        elif option==14: 
             update_business(business_collection)
-        elif option==15:
+        elif option==15: 
             delete_business(business_collection)
         elif option==16:
             mongoClient.close()
@@ -150,15 +150,32 @@ def find_open_businesses(business_collection):
                               "stars": 1, "review_count": 1}).limit(10)
     for doc in output:
         print(doc)
-    
+   
 def find_by_categories(business_collection):
-    print("TODO")
+    category = input("Please enter a category: ")
+    output = business_collection.find({"categories": { "$regex": category }}, 
+                                      {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1,
+                                       "stars": 1, "review_count": 1}).limit(10)
+    for doc in output:
+        print(doc)
     
 def find_businesses_allow_dogs(business_collection):
-    print("TODO")
-    
+    output = business_collection.find({ "attributes": { "$elemMatch": { "DogsAllowed": "true" }}}).limit(10)
+    for doc in output:
+        print(doc)
+   
 def find_reviews_by_keyword(business_collection, review_collection):
-    print("TODO")
+    name = print("Please enter business name: ")
+    keyword = print("Please enter key word: ")
+    
+    business = business_collection.find_one({"name": {"$regex": name}})
+    output = review_collection.find({"business_id": business["business_id"],
+                                     "text": {"$regex": keyword}},
+                                    {"stars": 1, "useful": 1, "funny": 1, 
+                                     "cool": 1, "date": 1, "text": 1}).limit(10)
+    
+    for doc in output:
+        print(doc)
 
 def add_review(business_collection, review_collection):
     name = input("Please enter business name: ")
