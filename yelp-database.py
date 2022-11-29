@@ -88,16 +88,46 @@ def find_business(business_collection):
                               "stars": 1, "review_count": 1}).limit(5)
     for doc in output:
         print(doc)
-    
+
+
 def find_all_reviews(business_collection, review_collection):
     name = input("Please enter business name: ")
-    
+    business = business_collection.find_one({"name": {"$regex": name}})
+
+    output = review_collection.find({"business_id": business[
+        "business_id"]}).limit(10)
+
+    for doc in output:
+        print(doc)
+
+
 def find_5_or_more_useful(business_collection, review_collection):
     name = input("Please enter business name: ")
-    
+    business = business_collection.find_one({"name": {"$regex": name}})
+
+    output = review_collection.find({"business_id": business["business_id"],
+                                     "useful": {"$gt": 5}},
+                                    {"stars": 1, "date": 1, "text": 1,
+                                     "useful":
+                                         1}).limit(10)
+
+    for doc in output:
+        print(doc)
+
+
 def find_5_or_more_funny(business_collection, review_collection):
     name = input("Please enter business name: ")
-    
+    business = business_collection.find_one({"name": {"$regex": name}})
+
+    output = review_collection.find({"business_id": business["business_id"],
+                                     "funny": {"$gt": 5}},
+                                    {"stars": 1, "date": 1, "text": 1,
+                                     "funny": 1}).limit(10)
+
+    for doc in output:
+        print(doc)
+
+
 def find_5_or_more_cool(business_collection, review_collection):
     name = input("Please enter business name: ")
     
