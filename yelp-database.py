@@ -85,7 +85,7 @@ def find_business(business_collection):
     name = input("Please enter business name: ")
     output = business_collection.find({"name": {"$regex": name}},
                              {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1,
-                              "stars": 1, "review_count": 1}).limit(5)
+                              "stars": 1, "review_count": 1}).limit(10)
     for doc in output:
         print(doc)
 
@@ -184,16 +184,35 @@ def add_review(business_collection, review_collection):
     
     business = business_collection.find_one({"name": {"$regex": name}})
     new_review = {"business_id": business["business_id"], "stars": star, "text": review, "date": datetime.datetime.now()}
-    review_collection.insert_one(new_review)
+    
+    try:
+        review_collection.insert_one(new_review)
+        print("Successfully added review!")
+        return True
+    except Exception as e:
+        print("An exception occurred ::", e)
+        return False
     
 def update_business(business_collection):
     business_id = input("Please enter business id: ")
     new_name = input("Please enter new business name: ")
-    business_collection.update_one({"business_id": business_id}, {"$set": {"name": new_name}})
+    try:
+        business_collection.update_one({"business_id": business_id}, {"$set": {"name": new_name}})
+        print("Successfully updated business!")
+        return True
+    except Exception as e:
+        print("An exception occurred ::", e)
+        return False
     
 def delete_business(business_collection):
     business_id = input("Please enter business id: ")
-    business_collection.delete_one({"business_id": business_id})
+    try:
+        business_collection.delete_one({"business_id": business_id})
+        print("Successfully deleted business!")
+        return True
+    except Exception as e:
+        print("An exception occurred ::", e)
+        return False
     
 
 if __name__ == "__main__":
