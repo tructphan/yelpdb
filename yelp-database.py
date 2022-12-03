@@ -182,7 +182,7 @@ def find_by_categories(business_collection):
         print(doc)
     
 def find_businesses_allow_dogs(business_collection):
-    output = business_collection.find({ "attributes": { "$elemMatch": { "DogsAllowed": "true" }}}).limit(10)
+    output = business_collection.find({ "attributes": { "$elemMatch": { "DogsAllowed": "True" }}}).limit(10)
     for doc in output:
         print(doc)
    
