@@ -29,7 +29,7 @@ def print_options(user_options):
 def main():
     mongoClient = None
     try:
-        mongoClient = MongoClient("mongodb://ec2-54-164-108-204.compute-1.amazonaws.com:58002")
+        mongoClient = MongoClient("mongodb://ec2-54-164-108-204.compute-1.amazonaws.com:47968")
         print("MongoDB connected successfully!")
     except:
         print("Error: Could not connect to MongoDB")
@@ -58,7 +58,7 @@ def main():
         elif option==7:
             find_ca_businesses(business_collection)
         elif option==8:
-            find_500_or_more_reviews(business_collection, review_collection)
+            find_500_or_more_reviews(business_collection)
         elif option==9: 
             find_open_businesses(business_collection)
         elif option==10:
@@ -184,13 +184,13 @@ def find_by_categories(business_collection):
         print(doc)
     
 def find_businesses_allow_dogs(business_collection):
-    output = business_collection.find({ "attributes": { "$elemMatch": { "DogsAllowed": "true" }}}).limit(10)
+    output = business_collection.find({"attributes.DogsAllowed": "True"}, {"name": 1, "address": 1, "city": 1, "state": 1, "postal_code": 1, "stars": 1, "review_count": 1}).limit(10)
     for doc in output:
         print(doc)
    
 def find_reviews_by_keyword(business_collection, review_collection):
-    name = print("Please enter business name: ")
-    keyword = print("Please enter key word: ")
+    name = input("Please enter business name: ")
+    keyword = input("Please enter key word: ")
     
     business = business_collection.find_one({"name": {"$regex": name}})
     output = review_collection.find({"business_id": business["business_id"],
