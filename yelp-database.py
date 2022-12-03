@@ -94,8 +94,10 @@ def find_all_reviews(business_collection, review_collection):
     name = input("Please enter business name: ")
     business = business_collection.find_one({"name": {"$regex": name}})
 
-    output = review_collection.find({"business_id": business[
-        "business_id"]}).limit(10)
+    output = review_collection.find({"business_id": business["business_id"]},
+                                     {"stars": 1, "date": 1,
+                                      "text": 1, "useful": 1,
+                                      "funny": 1, "cool": 1}).limit(10)
 
     for doc in output:
         print(doc)
