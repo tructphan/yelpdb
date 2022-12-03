@@ -136,9 +136,19 @@ def find_5_or_more_cool(business_collection, review_collection):
                                      "cool": {"$gte": 5}},
                                     {"stars": 1, "date": 1, "text": 1,
                                      "cool": 1}).limit(10)
+    for doc in output:
+        print(doc)
     
 def find_3_or_more_stars(business_collection, review_collection):
     name = input("Please enter business name: ")
+    business = business_collection.find_one({"name": {"$regex": name}})
+
+    output = review_collection.find({"business_id": business["business_id"],
+                                     "stars": {"$gte": 3}},
+                                    {"stars": 1, "date": 1, "text": 1}).limit(10)
+
+    for doc in output:
+        print(doc)
     
 def find_ca_businesses(business_collection):
     output = business_collection.find({"state": "CA"},
@@ -148,7 +158,13 @@ def find_ca_businesses(business_collection):
         print(doc)
     
 def find_500_or_more_reviews(business_collection):
-    print("TODO")
+    output = business_collection.find({"review_count": {"$gte": 500}},
+                                      {"name": 1, "address": 1, "city": 1,
+                                       "state": 1, "postal_code": 1,
+                                       "stars": 1, "review_count": 1}).limit(10)
+
+    for doc in output:
+        print(doc)
     
 def find_open_businesses(business_collection):
     output = business_collection.find({"is_open": 1},
