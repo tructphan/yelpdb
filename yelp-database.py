@@ -29,7 +29,7 @@ def print_options(user_options):
 def main():
     mongoClient = None
     try:
-        mongoClient = MongoClient("localhost:27017")
+        mongoClient = MongoClient("mongodb://ec2-54-164-108-204.compute-1.amazonaws.com:27017")
         print("MongoDB connected successfully!")
     except:
         print("Error: Could not connect to MongoDB")
@@ -106,7 +106,7 @@ def find_5_or_more_useful(business_collection, review_collection):
     business = business_collection.find_one({"name": {"$regex": name}})
 
     output = review_collection.find({"business_id": business["business_id"],
-                                     "useful": {"$gt": 5}},
+                                     "useful": {"$gte": 5}},
                                     {"stars": 1, "date": 1, "text": 1,
                                      "useful":
                                          1}).limit(10)
@@ -120,7 +120,7 @@ def find_5_or_more_funny(business_collection, review_collection):
     business = business_collection.find_one({"name": {"$regex": name}})
 
     output = review_collection.find({"business_id": business["business_id"],
-                                     "funny": {"$gt": 5}},
+                                     "funny": {"$gte": 5}},
                                     {"stars": 1, "date": 1, "text": 1,
                                      "funny": 1}).limit(10)
 
@@ -130,6 +130,12 @@ def find_5_or_more_funny(business_collection, review_collection):
 
 def find_5_or_more_cool(business_collection, review_collection):
     name = input("Please enter business name: ")
+    business = business_collection.find_one({"name": {"$regex": name}})
+
+    output = review_collection.find({"business_id": business["business_id"],
+                                     "cool": {"$gte": 5}},
+                                    {"stars": 1, "date": 1, "text": 1,
+                                     "cool": 1}).limit(10)
     
 def find_3_or_more_stars(business_collection, review_collection):
     name = input("Please enter business name: ")
